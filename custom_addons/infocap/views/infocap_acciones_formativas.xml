@@ -1,0 +1,141 @@
+<odoo>
+  <data>
+    <!-- Vista de lista para gusto.acciones.formativas -->
+    <record model="ir.ui.view" id="infocap.acciones_formativas_list">
+      <field name="name">Acciones formativas</field>
+      <field name="model">infocap.acciones.formativas</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="id_sto"/>
+          <field name="name"/>
+          <field name="nexp"/>
+          <field name="tipo_accionformativa_id" widget="many2one_tags"/>
+          <field name="horas"/>
+          <field name="modalidad"/>
+          <field name="country_id" options="{'no_create': True, 'no_open': True}" invisible="1"/>  
+          <field name="provincia_ids" widget="many2many_tags"/>
+          <field name="fec_inicio"/>
+          <field name="fec_fin"/>
+          <field name="n_part_prev"/>
+          <field name="n_part_real"/>
+          <field name="presupuesto_solicitado" groups="infocap.group_infocap_tecnicos_direccion"/>
+          <field name="coste" groups="infocap.group_infocap_tecnicos_direccion"/>
+          <field name="pendiente_justificar" groups="infocap.group_infocap_tecnicos_direccion"/>
+          <!-- Quitar comentarios 
+          <field name="dinamizador_id" widget="many2one_tags"/>
+
+          <field name="formador_id" widget="many2one_tags"/>
+          <field name="validacion"/>
+          -->
+          <field name="docente_ids" widget="many2many_tags"/>
+          <field name="estado"/>
+          <field name="recurso"/>
+          <field name="observaciones"/>
+        </list>
+      </field>
+    </record>
+    <!-- Vista de formulario para gusto.acciones.formativas -->
+    <record model="ir.ui.view" id="infocap.acciones_formativas_form">
+      <field name="name">Acciones Formativas</field>
+      <field name="model">infocap.acciones.formativas</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <h2 style="color:rgb(22, 54, 87); margin-bottom: 0px;">Información de la Acción formativa</h2>
+            <hr style="border: none; border-top: 2px double black; margin: 0;"/>  
+            
+            <group col = "2">
+              <group>
+                <field name="name"/>
+                <field name="id_sto"/>
+                <field name="nexp"/>
+                <!--
+                <field name="tipo_accionformativa_id"/> 
+                -->
+                <field name="horas"/>
+                <field name="modalidad"/>
+                <field name="country_id" options="{'no_create': True, 'no_open': True}" invisible="1" widget="many2one_tags"/>  
+                <field name="provincia_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                <field name="fec_inicio"/>
+                <field name="fec_fin"/>
+                <field name="n_part_prev"/>
+                <field name="n_part_real"/>
+              </group>
+              <group>
+                <field name="presupuesto_solicitado" groups="infocap.group_infocap_tecnicos_direccion"/>
+                <field name="coste" groups="infocap.group_infocap_tecnicos_direccion"/>
+                <field name="pendiente_justificar" groups="infocap.group_infocap_tecnicos_direccion"/>
+                <!--
+                <field name="dinamizador_id" widget="many2one_tags" domain="[('es_dinamizador_colaborador', '=', True)]" options="{'no_create': True}"/>
+                <field name="formador_id" widget="many2one_tags" domain="[('es_empresa_formadora', '=', True)]" options="{'no_create': True}"/>
+                -->
+                <field name="validacion"/>
+                <field name="docente_ids" widget="many2many_tags" domain="[('es_docente', '=', True)]" options="{'no_create': True}"/>
+                <field name="estado"/>
+                <field name="recurso"/>
+                <field name="observaciones"/>
+              </group>
+              
+            </group>
+            
+            <notebook colspan="3">
+              <page string="Participantes" name="participantes">
+                <field name="participantes_accionformativa_ids" options="{'no_create': True}" domain="[('es_participante', '=', True)]"/> 
+                  <list editable="bottom" create="true">
+                                       
+                    <field name="name"/>
+                    <!-- button name= "prueba" string="Documentación Individual" type="object" class="btn-primary"/-->
+                  
+                  </list>
+              </page>
+              
+              <page string="Docentes" name="docentes">
+                <field name="docente_ids" options="{'no_create': True}" domain="[('es_docente', '=', True)]"/> 
+                  <list editable="bottom" create="true">
+                                       
+                    <field name="name"/>
+                    <!-- button name= "prueba" string="Documentación Individual" type="object" class="btn-primary"/-->
+                  
+                  </list>
+              </page>
+                
+              <page string="Documentos" name="documentos">
+                <field name="documentos_ids"  />
+                  <list editable="bottom" create="true">
+                    <!--
+                    <field name="document_type_id"/>
+                    
+                    <field name="fecha"/>
+
+                    <field name="participante_id" />
+                    
+                    <field name="accionformativa_id" default="taller.id" invisible="1"/>
+                    <field name="horas_dia"/>
+                    
+                    <field name="document_file" filename='name' widget="binary"/>
+                    -->
+                    <field name="name" invisible='1'/>
+              </list>
+               
+        
+  
+              </page>
+              
+
+            </notebook>
+            
+          </sheet>
+        </form>
+       
+      </field>
+    </record>
+    
+
+    <!-- Acción para abrir vistas en modelos -->
+    <record model="ir.actions.act_window" id="infocap.action_acciones_formativas">
+      <field name="name">Acciones formativas</field>
+      <field name="res_model">infocap.acciones.formativas</field>
+      <field name="view_mode">list,form</field>
+    </record>
+  </data>
+</odoo>

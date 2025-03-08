@@ -1,0 +1,71 @@
+
+<odoo>
+    <!-- VISTA LISTA -->
+    <record id="view_course_version_list" model="ir.ui.view">
+        <field name="name">course.version.tree</field>
+        <field name="model">infocap.ediciones</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="curso_id"/>
+                <field name="name"/>
+                <field name="contador_participantes" widget = "integer"/>
+                <field name="docente_id"/>
+                <field name="fecha_inicio"/>
+                <field name="fecha_final"/>
+                <field name="comunicado"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- VISTA FORMULARIO -->
+    <record id="view_course_version_form" model="ir.ui.view">
+        <field name="name">course.version.form</field>
+        <field name="model">infocap.ediciones</field>
+        <field name="arch" type="xml">
+            <form string="Versión del Curso">
+                <sheet>
+                    <notebook>
+                        <!-- Pestaña Información General -->
+                        <page string="Información General">
+                            <group>
+                                <field name="name"/>
+                                <field name="curso_id"/>
+                                <field name="docente_id"/>
+                                <field name="fecha_inicio"/>
+                                <field name="fecha_final"/>
+                            </group>
+                            <group>
+                                <field name="comunicado"/>
+                                <field name="fecha_comunicado"/>
+                            </group>
+                        </page>
+
+                        <!-- Pestaña de Participantes -->
+                        <page string="Participantes">
+                            <group>
+                                <field name="max_participantes"/>
+                            </group>
+                            <field name="participantes_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <!--field name="email"/>
+                                    <field name="phone"/-->
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- ACCIÓN PARA MOSTRAR EL MODELO EN ODOO -->
+    <record model="ir.actions.act_window" id="infocap_action_ediciones">
+        <field name="name">Versiones de Cursos</field>
+        <field name="res_model">infocap.ediciones</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Gestione versiones de cursos, docentes y participantes aquí.</p>
+        </field>
+    </record>
+</odoo>

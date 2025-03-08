@@ -1,0 +1,46 @@
+<odoo>
+  <data>
+    <!-- Definición de la vista de lista -->
+
+    <record model="ir.ui.view" id="infocap.tipo_accionformativa_list">  
+      <field name="name">Acción formativa</field>
+      <field name="model">infocap.tipo.accionformativa</field>
+      <field name="arch" type="xml">
+        <list string="Acción Formativa">  <!-- Se cambió <tree> por <list> (Odoo 18 usa <list> en lugar de <tree>) -->
+          <field name="name" string="Acción Formativa"/>  
+              <field name="modalidad" string = "Modalicad"/>
+              <field name="duraccion" string="Duración"/>
+              <field name="documentos_ids" string="Documentación Acción Formativa"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Definición de la vista de formulario -->
+
+    <record model="ir.ui.view" id="infocap.tipo_accionformativa_form">
+      <field name="name">Acción formativa</field>
+      <field name="model">infocap.tipo.accionformativa</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name" string="Acción Formativa"/>  
+              <field name="modalidad" string = "Modalicad"/>
+              <field name="duraccion" string="Duración en Horas"/>
+              <field name="documentos_ids" string="Documentación Acción Formativa"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción para abrir vistas en modelos -->
+
+    <record model="ir.actions.act_window" id="infocap.action_tipo_accionformativa">
+      <field name="name">Acciones formativas</field>
+      <field name="res_model">infocap.tipo.accionformativa</field>
+      <field name="view_mode">list,form</field>  <!-- Se cambió tree,form por list,form -->
+    </record>
+
+  </data>
+</odoo>

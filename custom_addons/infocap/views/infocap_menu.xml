@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+    <!--   MENU GENERAL   -->
+    <menuitem name="Gestión Programas" id="infocap.menu_general_root"/>
+    <menuitem name="GEST Infocap" id="infocap.menu_configuracion_root" groups="infocap.grupo_infocap_configuracion"/>
+
+    <!-- General Sub menu -->
+    <menuitem name="Solicitudes" id="infocap_solicitudes" parent="infocap.menu_general_root"
+              action="infocap_action_solicitudes"/> 
+       
+    <menuitem name="Participantes" id="infocap.general_participantes" parent="infocap.menu_general_root" action="infocap_action_participantes" sequence="10"/> 
+    <!--
+    groups="infocap.grupo_infocap_participantes"/>
+   -->
+    <menuitem name="Ediciones Cursos" id="infocap.general_ediciones" parent="infocap.menu_general_root" action="infocap_action_ediciones"
+              />
+    
+    <menuitem name="Acciones Formativas" id="infocap.general_acciones" parent="infocap.menu_general_root" action="infocap.action_acciones_formativas"/>
+
+
+
+    <!-- Configuracion Sub menu  -->
+
+    <!-- Crear el nuevo submenú "Tablas gusto" -->
+   
+    
+    <!-- Menús dentro de "Tablas gusto"  -->
+    
+  
+    <!-- Submenu Tablas Auxiliares -->
+    <menuitem name="Tablas Auxiliares" id="infocap_cfg_tablas_auxiliares" parent="infocap.menu_configuracion_root"/>
+    
+    <menuitem name="Colectivo" id="infocap.conf_colectivo_menu" parent="infocap_cfg_tablas_auxiliares" action="infocap.action_colectivo"/> 
+    <menuitem name="Sector Ocupación" id="infocap.conf_sectoro_menu" parent="infocap_cfg_tablas_auxiliares" action="infocap.action_sectorocupacion"/>
+    <menuitem name="Situación solicitante" id="infocap.conf_situacion_menu" parent="infocap_cfg_tablas_auxiliares" action="infocap.action_situacion"/>
+    <menuitem name="Perfil Ocupación" id="infocap.conf_perfilo_menu" parent="infocap_cfg_tablas_auxiliares" action="infocap.action_perfilocupacion"/>
+    <menuitem name="Tipo documento" id="infocap.conf_tipo_documento_menu" parent="infocap_cfg_tablas_auxiliares" action="infocap.action_tipo_documento"/>
+    <menuitem name="Tipo Acción Formativa" id="infocap.conf_tipo_accionformativa_menu" parent="infocap_cfg_tablas_auxiliares" action="infocap.action_tipo_accionformativa"/>
+    <menuitem name="Tipo Taller" id="infocap.conf_tipo_taller_menu" parent="infocap_cfg_tablas_auxiliares" action="infocap.action_tipo_taller"/>
+    <menuitem id="infocap_menu_separator_1" parent="infocap_cfg_tablas_auxiliares" sequence="29" action=""/>
+    
+    <menuitem name="Intereses Profesionales" id="infocap_cfg_interesesprofesionales" parent="infocap_cfg_tablas_auxiliares"
+              action="infocap_action_interesesprofesionales"/>
+    <menuitem name="Necesidades Formación Específica" id="infocap_cfg_necesidadesformacionespecifica" parent="infocap_cfg_tablas_auxiliares"
+              action="infocap_action_necesidadesformacionespecifica"/>
+    <menuitem name="Objetivo Profesional" id="infocap_cfg_objetivoprofesional" parent="infocap_cfg_tablas_auxiliares"
+              action="infocap_action_objetivoprofesional"/>
+    
+    <!-- Submenu Tablas Maestras -->
+    <menuitem name="Tablas Maestras" id="infocap_cfg_tablas_maestras" parent="infocap.menu_configuracion_root"/>
+
+    <!-- Menús dentro de Tablas Maestras--> 
+    <menuitem name="Programas" id="infocap_programas" parent="infocap_cfg_tablas_maestras"
+              action="infocap_action_programas"/>
+
+    
+    <menuitem name="Proyectos" id="infocap_proyectos" parent="infocap_cfg_tablas_maestras"
+              action="infocap_action_proyectos"/>
+    <menuitem name="Convocatorias" id="infocap_convocatorias" parent="infocap_cfg_tablas_maestras"
+              action="infocap_action_convocatorias"/>
+    <menuitem name="Productos" id="infocap_productos" parent="infocap_cfg_tablas_maestras"
+              action="infocap_action_productos"/>
+
+    <menuitem name="Docentes" id="infocap_docentes" parent="infocap_cfg_tablas_maestras"
+              action="infocap_action_docentes"/>
+    
+  </data>
+</odoo>

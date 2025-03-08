@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- explicit list view definition jjj  -->
+    <record model="ir.ui.view" id="gusto_experiencialaboral_list">
+      <field name="name">gusto.experiencialaboral_list</field>
+      <field name="model">gusto.experiencialaboral</field>
+      <field name="type">list</field>  <!-- Odoo 18 usa 'list' en vez de 'tree' -->
+      <field name="priority" eval="10"/>  <!-- Odoo 18 usa priority en vez de mode -->
+      <field name="arch" type="xml">
+        <list string="Experiencia Laboral"> <!-- Se cambia <tree> por <list> -->
+          <field name="name"/>
+          <field name="denominacion"/>
+          
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="gusto_experiencialaboral_form">
+      <field name="name">gusto.experiencialaboral_form</field>
+      <field name="model">gusto.experiencialaboral</field>
+      <field name="type">form</field>  <!-- Se usa 'form' para los formularios -->
+      <field name="priority" eval="10"/>  <!-- Odoo 18 usa priority en vez de mode -->
+      <field name="arch" type="xml">
+        <form string="Experiencia Laboral">
+            <sheet>
+              <group>
+                  <field name="name"/>
+                  <field name="denominacion"/>
+                  
+              </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gusto_action_experiencialaboral">
+      <field name="name">Experiencial Laboral</field>
+      <field name="res_model">gusto.experiencialaboral</field>
+      <field name="view_mode">list,form</field>  <!-- Se cambia 'tree' por 'list' -->
+    </record>
+
+
+</odoo>

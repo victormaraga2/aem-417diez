@@ -1,0 +1,40 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="gusto.contratos_genyaut">
+      <field name="name">Listado de contratos General y Autonomos</field>
+      <field name="model">gusto.contratos</field>
+      <field name="arch" type="xml">
+      
+        <list create="false" default_order='provincia_gusto, participante_gusto' > 
+
+              <field name="provincia_gusto" group="1"/>
+              <field name="participante_id" group="1"/>
+              <field name="participante_gusto" />
+              <field name="empresa" />
+              <field name="modalidad" />
+              <field name='tipo_contratoss' />
+              
+              <field name="jornada"/>
+              <field name="porcentaje_jornada" optional="hide"/>
+              <field name="fecha_inicio"/>
+              <field name="fecha_fin"/>     
+              <field name="diastrabajado"/>
+              <field name="peonadas"/>
+              <field name="medio"/>
+              <field name='partner_integrador'/>
+              <field name="observacion" />    
+        </list>
+        
+
+      </field>
+    </record>
+   <record model="ir.actions.act_window" id="gusto.action_contratos_genyaut">
+            <field name="name">Listado de contratos Régimen General y Autónomo</field>
+            <field name="res_model">gusto.contratos</field>
+            <field name="view_mode">list</field>
+            <field name="domain">[('modalidad.name', '!=', 'Cuenta ajena (régimen agrario)')]</field>
+        </record>
+    </data>
+</odoo>

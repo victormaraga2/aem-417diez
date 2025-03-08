@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--  Andalucía Emplea Mas Categoría de Modulo -->
+        <record id="module_category_inforef" model="ir.module.category">
+            <field name="name">Andalucía Emplea Más</field>
+            <field name="description">Ayuda a la gestión de la asociación</field>
+            <field name="sequence">5</field>
+        </record>
+        <!-- Tecnicos Integrales-->
+        <record id="group_inforef_tecnico_integrales" model="res.groups">
+            <field name="name">Tecnicos Integrales</field>
+            <field name="category_id" ref="inforef.module_category_inforef" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <!-- Tecnicos Prospección-->
+        <record id="group_inforef_tecnicos_prospeccion" model="res.groups">
+            <field name="name">Tecnicos Prospeccion</field>
+            <field name="category_id" ref="inforef.module_category_inforef" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <!-- Tecnicos Direccion-->
+        <record id="group_inforef_tecnicos_direccion" model="res.groups">
+            <field name="name">Tecnicos Direccion</field>
+            <field name="category_id" ref="inforef.module_category_inforef" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+
+    </data>
+</odoo>

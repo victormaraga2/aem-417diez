@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- explicit list view definition jjj  -->
+    <record model="ir.ui.view" id="captacion_experiencialaboral_list">
+      <field name="name">captacion.experiencialaboral_list</field>
+      <field name="model">captacion.experiencialaboral</field>
+      <field name="arch" type="xml">
+        <tree string="Experiencia Laboral">
+          <field name="name"/>
+          <field name="denominacion"/>
+          
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="captacion_experiencialaboral_form">
+      <field name="name">captacion.experiencialaboral_form</field>
+      <field name="model">captacion.experiencialaboral</field>
+      <field name="arch" type="xml">
+        <form string="Experiencia Laboral">
+            <sheet>
+              <group>
+                  <field name="name"/>
+                  <field name="denominacion"/>
+                  
+              </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="captacion_action_experiencialaboral">
+      <field name="name">Experiencial Laboral</field>
+      <field name="res_model">captacion.experiencialaboral</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+</odoo>

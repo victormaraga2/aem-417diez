@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <!-- Herencia de la vista de lista de res.partner -->
+    <record id="gusto_partners_tree" model="ir.ui.view" priority="0">  <!-- Se agregó priority="0" -->
+        <field name="name">gusto.candidatos.tree</field>  <!-- Se mantiene el nombre original -->
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>  <!-- Se mantiene la herencia de la vista original -->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="after">
+                <field name="es_candidato"/>  <!-- Se eliminó <group>, ya que no es necesario en una vista de lista -->
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Acción para abrir la vista de candidatos -->
+    <record id="gusto.action_candidatos" model="ir.actions.act_window" priority="0">
+        <field name="name">Candidatos</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>  <!-- Se cambió tree,form por list,form -->
+        <field name="context">{'default_es_candidato': True}</field>
+        <field name="domain">[('es_candidato', '=', True)]</field>
+    </record>
+    </data>
+</odoo>

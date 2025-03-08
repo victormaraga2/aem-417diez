@@ -1,0 +1,33 @@
+# Copyright Broadcom, Inc. All Rights Reserved.
+# SPDX-License-Identifier: APACHE-2.0
+
+services:
+  odoo:
+    image: odoo:18.0
+    env_file: .env
+    depends_on:
+      - postgres
+    ports:
+      - "127.0.0.1:8069:8069"
+    volumes:
+      - data:/var/lib/odoo
+      - ./config_odoo/odoo.conf:/etc/odoo/odoo.conf
+      - ./custom_addons:/mnt/extra-addons
+        #      - ./log:/var/log/odoo
+        #  - ./filestore:/var/lib/odoo/filestore
+    environment:
+      - ADDONS_PATH=/mnt/extra-addons
+    restart: always
+  postgres:
+    image: postgres:14
+    env_file: .env
+    restart: always
+    volumes:
+      - db18:/var/lib/postgresql/data/pgdata
+      #- ./pgdata:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+volumes:
+  data:
+  db18:
+

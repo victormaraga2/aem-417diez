@@ -1,0 +1,46 @@
+# Copyright Broadcom, Inc. All Rights Reserved.
+# SPDX-License-Identifier: APACHE-2.0
+
+services:
+  postgresql:
+    image: docker.io/bitnami/postgresql:14
+    env_file: .env
+    volumes:
+      - db:/bitnami/postgresql
+    #environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      #- POSTGRES_PASSWORD=myodoo
+      #- ALLOW_EMPTY_PASSWORD=yes
+      #- POSTGRESQL_USERNAME=bn_odoo
+      #- POSTGRESQL_DATABASE=bitnami_odoo
+    ports:
+      - '5440:5432'
+  odoo:
+    image: docker.io/bitnami/odoo:17
+    env_file: .env
+    ports:
+      - '127.0.0.1:9669:8069'
+    volumes:
+      - data:/bitnami/odoo
+      - ./config_odoo/odoo.conf:/etc/odoo/odoo.conf
+      - ./custom_addons:/mnt/extra-addons
+      - ./filestore
+      - ./log
+    depends_on:
+      - postgresql
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      #- ALLOW_EMPTY_PASSWORD=yes
+      
+      #- ODOO_DATABASE_HOST=postgresql
+      #- ODOO_DATABASE_PORT_NUMBER=5432
+      #- ODOO_DATABASE_USER=bn_odoo
+      #- ODOO_DATABASE_NAME=bitnami_odoo
+      - ADDONS_PATH=/mnt/extra-addons
+volumes:
+  data:
+  db:
+  #postgresql_data:
+  #  driver: local
+  #odoo_data:
+  #  driver: local

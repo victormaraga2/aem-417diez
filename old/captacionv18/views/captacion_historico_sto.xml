@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="captacion.historico_sto_list">
+      <field name="name">captacion</field>
+      <field name="model">captacion.historico.sto</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name='name'/>
+          <field name='provincia'/>
+          <field name='participante'/>
+          <field name='pt_nombre'/>
+          <field name='pt_apellido1'/>
+          <field name='pt_apellido2'/>
+          <field name='unidad'/>
+          <field name='alta_sto'/>
+          <field name='baja_sto'/>
+          <field name='colectivo'/>
+          <field name='inicio_atencion'/>
+          <field name='fin_atencion'/>
+          <field name='h_orienta'/>
+          <field name='h_forma'/>
+          <field name='recibi'/>
+          <field name='inicio_inserccion'/>
+          <field name='fin_inserccion'/>
+          <field name='h_fase_inserccion'/>
+          <field name='fecha_valor'/>
+        </list>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="captacion.action_historico_sto">
+      <field name="name">Historico STO</field>
+      <field name="res_model">captacion.historico.sto</field>
+      <field name="view_mode">list</field>
+    </record>
+  </data>
+</odoo>

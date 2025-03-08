@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+    <record id="view_dashboard_shared" model="ir.ui.view">
+        <field name="name">Dashboard Compartido</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban class="o_dashboard">
+                <field name="name"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_card">
+                            <div class="oe_kanban_content">
+                                <div>
+                                    <strong>Talleres captacion</strong>
+                                    <p>Total de talleres: <t t-esc="record.talleres_captacion2_ids.length"/></p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Menú para acceder al tablero -->
+    <menuitem id="menu_dashboard_shared"
+              name="Dashboard Compartido"
+              parent="base.menu_management"
+              action="action_dashboard_shared"/>
+
+    <record id="action_dashboard_shared" model="ir.actions.act_window">
+        <field name="name">Dashboard Compartido</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_dashboard_shared"/>
+    </record>
+    </data>
+</odoo>

@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+        <record id="gusto_objetivos_general_tree" model="ir.ui.view">
+            <field name="name">gusto.objetivos.general.tree</field>
+            <field name="model">gusto.gusto</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false"  > <!-- editable="top" create="false" delete="false" <field name="total" readonly="1"/> > -->
+                    <field name="name" readonly="1"/>
+                    <field name="provincia" readonly="1"/>
+                    <field name="participante" readonly="1"/>
+                    <field name="fecha_objetivo" readonly="1"/>
+                    
+                </tree>
+            </field>
+        </record>
+      
+        <record id="gusto_objetivos_general_graph" model="ir.ui.view">
+        <field name="name">gusto.objetivos.general.graph</field>
+        <field name="model">gusto.gusto</field>
+        <field name="arch" type="xml">
+            <graph string="Registros Acumulados con Fecha Objetivo">
+                <!-- 
+                <field name="provincia" type="row"/>
+                 -->
+                
+                <field name="fecha_objetivo" type="col" interval="day"/>
+                
+                <field name="q_participante" type="measure" />
+             
+            </graph>
+        </field>
+    </record>
+        <record id="gusto_objetivos_general_pivot" model="ir.ui.view">
+            <field name="name">gusto.objetivos.pivot</field>
+            <field name="model">gusto.gusto</field>
+            <field name="arch" type="xml">
+                <pivot string="Objetivo por Provincia y Mes">
+                    <!-- Agrupación por provincia -->
+                    <field name="provincia" type="col"/>
+                    <!-- Concepto como filas -->
+                    <field name="fecha_objetivo" type="row" interval="month"/>
+                    <!-- Campos de valores a analizar -->
+                    
+                </pivot>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="gusto.action_objetivos_general">
+            <field name="name">Participantes con contratos en Régimen Agrario con 54 o mas peonadas computable</field>
+            <field name="res_model">gusto.gusto</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="domain">[('fecha_objetivo', '!=', False), ('contratos_ids.madalidad[:1].name', '!=' , 'Cuenta ajena (régimen agrario)')]</field>
+            <field name="view_id" ref="gusto_objetivos_general_graph"/>
+        </record>
+
+    </data>
+</odoo>

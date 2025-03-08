@@ -1,0 +1,57 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="captacion_participantes_list">
+      <field name="name">Listado Participantes</field>
+      <field name="model">res.partner</field>
+      <field name="type">list</field>  <!-- Odoo 18 usa 'list' en vez de 'tree' -->
+      <field name="priority" eval="10"/>  <!-- Odoo 18 usa priority en vez de mode -->
+      <field name="arch" type="xml">
+        <list string="Participantes">  <!-- Se cambia <tree> por <list> -->
+          <field name="nombre"/>
+          <field name="apellido1"/>
+          <field name="apellido2"/>
+          
+          <field name="proyectos_ids"/>
+          <field name="programas_ids"/>
+          
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="captacion_participantes_form">
+      <field name="name">Formulario Listado Participantes</field>
+      <field name="model">res.partner</field>
+      <field name="type">form</field>  <!-- Se usa 'form' para los formularios -->
+      <field name="priority" eval="10"/>  <!-- Odoo 18 usa priority en vez de mode -->
+      <field name="arch" type="xml">
+        <form string="Participantes">
+            <sheet>
+              <group>
+                  <field name="es_captacion_participante" default='True' invisible="1"/>
+                  <field name="nombre"/>
+                  <field name="apellido1"/>
+                  <field name="apellido2"/>
+                  
+                  <field name="proyectos_ids"/>
+                  <field name="programas_ids"/>
+              </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="captacion_action_participantes">
+      <field name="name">Listado Participantes</field>
+      <field name="res_model">res.partner</field>
+      <!--
+      <field name="domain">[('es_captacion_participante', '=', True)]</field>
+     
+      <field name="context">{'es_captacion_participante': True}</field>
+      -->
+      <field name="view_mode">list,form</field>  <!-- Se usa 'list' en lugar de 'tree' -->
+      <field name="view_id" ref="captacion_participantes_list"/>
+    </record>
+
+  </data>
+</odoo>

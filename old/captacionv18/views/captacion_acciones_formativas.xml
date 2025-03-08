@@ -1,0 +1,105 @@
+<odoo>
+  <data>
+    <!-- Vista de lista para captacion.acciones.formativas -->
+    <record model="ir.ui.view" id="captacion.acciones_formativas_list">
+      <field name="name">Acciones formativas</field>
+      <field name="model">captacion.acciones.formativas</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="id_sto"/>
+          <field name="name"/>
+          <field name="nexp"/>
+          <field name="accion"/>
+          <field name="horas"/>
+          <field name="modalidad"/>
+          <field name="country_id" options="{'no_create': True, 'no_open': True}" invisible="1"/>  <!-- invisible="1" reemplazado por options -->
+          <field name="provincia_ids" widget="many2many_tags"/>
+          <field name="inicio"/>
+          <field name="fin"/>
+          <field name="n_part_prev"/>
+          <field name="n_part_real"/>
+          <field name="presupuesto_solicitado" groups="captacion.group_captacion_coordinadores_integracion"/>
+          <field name="coste" groups="captacion.group_captacion_coordinadores_integracion"/>
+          <field name="pendiente_justificar" groups="captacion.group_captacion_coordinadores_integracion"/>
+          <field name="prospector_id"/>
+          <field name="prospector_factura"/>
+          <field name="validacion"/>
+          <field name="docente3" widget="many2many_tags"/>
+          <field name="estado"/>
+          <field name="recurso"/>
+          <field name="observaciones"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Vista de formulario para captacion.acciones.formativas -->
+    <record model="ir.ui.view" id="captacion.acciones_formativas_form">
+      <field name="name">Acciones formativas</field>
+      <field name="model">captacion.acciones.formativas</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <h2 style="color:rgb(22, 54, 87); margin-bottom: 0px;">Información de la Acción formativa</h2>
+            <hr style="border: none; border-top: 2px double black; margin: 0;"/>  
+            <group>
+              <field name="name"/>
+              <field name="nexp"/>
+              <field name="modalidad"/> 
+              <field name="country_id" options="{'no_create': True, 'no_open': True}" invisible="1"/>  <!-- invisible="1" reemplazado por options -->
+              <field name="provincia_ids" widget="many2many_tags"/>
+              <!--
+              <field name="inicio" options="{'invisible': [('inicio', '=', False)]}"/>  <!- attrs reemplazado por options ->
+              <field name="prev_inicio" options="{'invisible': [('inicio', '!=', False)]}"/>  <!- attrs reemplazado por options ->
+              <field name="fin" options="{'invisible': [('fin', '=', False)]}"/>  <!- attrs reemplazado por options ->
+              <field name="prev_fin" options="{'invisible': [('prev_fin', '=', False)]}"/>  <!- attrs reemplazado por options ->
+              -->
+              <field name="accion"/>
+              <field name="n_part_prev"/>
+              <field name="n_part_real"/>
+              <field name="prospector_id"/>
+              <field name="recurso"/>
+              <field name="presupuesto_solicitado" groups="captacion.group_captacion_coordinadores_integracion"/>
+              <field name="coste" groups="captacion.group_captacion_coordinadores_integracion"/>
+              <field name="pendiente_justificar" groups="captacion.group_captacion_coordinadores_integracion"/>
+              <field name="observaciones"/>
+            </group>
+            <notebook colspan="3">
+              <page string="Alumnos" name="alumnos">
+                <field name="participantes_ids" widget="many2many_tags">
+                  <list editable="bottom" create="true">
+                    <field name="participante"/>
+                    <field name="name"/>
+                    <field name="finaliza_accion"/>
+                  </list>
+                </field>
+              </page>
+              <page string="Docentes" name="docentes">
+                <field name="docente3"/>
+              </page>
+              <page string="Documentos" name="documentos">
+                <field name="docaem_ids">
+                  <list editable="bottom" create="true">
+                    <field name="captacion_id" string="PARTICIPANTE"/>
+                    <field name="tipo_doc_id" domain="[('categoria', '!=', 'administracion')]"/>
+                    <field name="fecha"/>
+                    <field name="grupal" default="0" attrs="{'invisible': True}"/>  <!-- invisible="1" reemplazado por options -->
+                    <field name="archivo" filename="name" widget="binary"/>
+                    <field name="name" options="{'invisible': True}"/>  <!-- invisible="1" reemplazado por options -->
+                    <button name="action_open_file_viewer" string="Ver Archivo" type="object" class="btn-primary"/>
+                  </list>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción para abrir vistas en modelos -->
+    <record model="ir.actions.act_window" id="captacion.action_acciones_formativas">
+      <field name="name">Acciones formativas</field>
+      <field name="res_model">captacion.acciones.formativas</field>
+      <field name="view_mode">list,form</field>
+    </record>
+  </data>
+</odoo>

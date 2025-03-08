@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Heredar la vista de árbol de productos -->
+    <record id="infocap_producto_list_inherit" model="ir.ui.view">
+        <field name="name">infocap.producto.tree.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="convocatoria_ids" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//field[@name='lst_price']" position="replace"/>
+            <xpath expr="//field[@name='standard_price']" position="replace"/>
+            <xpath expr="//field[@name='barcode']" position="replace"/>
+            <xpath expr="//field[@name='default_code']" position="replace"/>
+            <xpath expr="//field[@name='type']" position="replace"/>
+            <xpath expr="//field[@name='categ_id']" position="replace"/>
+            <xpath expr="//field[@name='additional_product_tag_ids']" position="replace"/>
+
+            
+        </field>
+    </record>
+        
+    <record id="infocap_producto_form_inherit" model="ir.ui.view">
+        <field name="name">infocap.producto.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Convocatoria">
+                    <group>
+                        <field name="convocatoria_ids" string="Convocatoria" widget="many2many_tags"/>
+                    </group>
+                </page>
+            </xpath>
+            <!--   Quitar el precio de coste -->
+            <xpath expr="//field[@name='standard_price']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="infocap_action_productos">
+      <field name="name">Productos</field>
+      <field name="res_model">product.product</field>
+      <field name="view_mode">list,form</field>  <!-- Se usa 'list' en lugar de 'tree' -->
+    </record>
+</odoo>

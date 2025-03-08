@@ -1,0 +1,171 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="gusto.talleres_list">
+      <field name="name">Talleres</field>
+      <field name="model">gusto.talleres</field>
+      <field name="arch" type="xml">
+        <list string="Talleres" create="false">
+          <field name="id" readonly="1"/>
+          <field name="id_sto" />
+          <field name="country_id" invisible="1" />
+          <field name="provincia_id" />
+          <field name="name" />
+          <field name="tipo" readonly="1" />
+          <!--
+          <field name="tipo_ori"/>
+          -->
+          <field name="fec_inicio"/>
+          <field name="fec_fin"/>
+          <field name="horas"/>
+          <field name="turno"/>
+          <field name="aula"/>
+          <field name="pt_nombre" optional="hide"/>
+          <field name="pt_apellido1" optional="hide"/>
+          <field name="pt_apellido2" optional="hide"/>
+          <field name="unidad" />
+          
+          <field name="estado"/>
+         
+
+         
+        </list>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="gusto.talleres_form">
+      <field name="name">Taller</field>
+      <field name="model">gusto.talleres</field>
+      <field name="arch" type="xml">
+        <form create="false">
+            <sheet>
+              <header>
+                <!--
+                      <button string="Prueba"  class="btn-primary"/>
+                -->
+                
+              </header>
+              <h2 style="color:rgb(22, 54, 87); margin-bottom: 0 px;">Información del taller</h2>
+              <hr style="border: none; border-top: 2px double black; margin: 0;"/>  
+              <group>
+                <group>
+                  <br></br>
+                  <br></br>
+                  <field name="id" readonly="1"/>
+                  <field name="id_sto" readonly="1"/>
+                  <field name="country_id" invisible="1" />
+                  <field name="provincia_id"/>
+                  <field name="name"/>
+                  <field name="tipo" readonly="1" />
+                  
+                  
+                  <!--  ############# MODIFICADO POR VICTOR PARA QUE NO LISTE LOS INDIVIALES -->
+                  <field name="tipo_gusto" domain="[('name', 'not ilike', 'INDIVIDUAL')]"/>
+                  
+                  <field name="modalidad" widget="radio" readonly="1" options="{'horizontal': true}" default="grupal"/>
+
+                  <!--
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="required">1</attribute>
+                    <attribute name="default">grupal</attribute>
+                  </field>
+                  -->
+                  <!--
+                  domain="[('categoria', '!=', 'administracion')]"/>
+                  -->
+                </group>
+                <group>
+                  <br></br>
+                  <br></br>
+                  <field name="fec_inicio"/>
+                  <field name="fec_fin"/>
+                  
+                  <field name="horas"/>
+                  
+                  <field name="turno"/>
+                  <field name="aula"/> 
+                  <field name="pt_nombre"/>
+                  <field name="pt_apellido1"/>
+                  <field name="pt_apellido2"/>
+                  <field name="estado" readonly="1"/>
+                </group>  
+              </group>
+             
+                  <!--
+                  <field name="pt_nombre" readonly="1"/>
+                  <field name="pt_apellido1" readonly="1"/>
+                  <field name="pt_apellido2" readonly="1"/>
+                  <field name="unidad" readonly="1"/>
+                  
+                  <field name="tipo"/>
+                  -->
+                 
+              
+              <notebook colspan="1">
+                
+                <page string="Participantes" name="Participante">
+                    <field name="participantes_talleres_ids" widget="many2many_tags" >
+                        <list editable="bottom" create='true'>
+                            <field name="name"/>
+                            <field name="participante" />
+                            <!--
+                            <field name="docaem_ids">
+                              <tree editable="bottom" create="True">
+                                  <field name="tipo_doc_id" domain="[('categoria', '!=', 'administracion')]"/>
+                                  <field name="fecha"/>
+                                  <field name="grupal" default="0" invisible="1"/>
+                                  <field name="gusto_id" default="gusto.id" invisible="1"/>
+                                  <field name="archivo" filename='name' widget="binary"/>
+                                  <field name="name" invisible='1'/>
+                                  <button name="action_open_file_viewer" string="Ver Archivo" type="object" class="btn-primary"/>
+                                
+                              S</tree>
+                            </field>
+                            -->
+                        
+                         </list>
+                        </field>
+                   
+                </page>
+                <page string="Documentacion" name="documentacion">
+
+                    <field name="docaem_ids" widget="one2many_tags">
+                            <list editable="bottom" create="true">
+                                <field name="gusto_id" default="gusto.id" string='DNI' context="{'show_field': ['gusto.name', 'gusto.participante']}" />
+                                <field name="participante_gusto" />
+                                <field name="tipo_doc_id" domain="[('categoria', '!=', 'administracion')]"/>
+                                <field name="fecha"/>
+                                <field name="taller_id" default="taller.id" invisible="1"/>
+                                <field name="horas" default="taller_id.horas"/>
+                                <field name="grupal" default="0" invisible="1"/>
+                                
+                                <field name="archivo" filename='name' widget="binary"/>
+                                <field name="name" invisible='1'/>
+                                
+                                <!--
+                                <field name="archivo_nombre" string="Nombre del Archivo"/>
+                                <field name="archivo" string="Ruta del Archivo"/>
+                                 -->
+                                <button name="action_open_file_viewer" string="Ver Archivo" type="object" class="btn-primary"/>
+                               
+                            </list>
+                        </field>
+                </page>
+                
+              </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+   
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="gusto.action_talleres">
+      <field name="name">Talleres</field>
+      <field name="res_model">gusto.talleres</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+
+  </data>
+</odoo>

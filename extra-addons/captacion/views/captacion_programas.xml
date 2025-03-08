@@ -1,0 +1,43 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="captacion_programas_list">
+      <field name="name">Listado Programas</field>
+      <field name="model">captacion.programas</field>
+      <field name="arch" type="xml">
+        <tree string="Programas">
+          <field name="name"/>
+          <field name="situacion"/>
+          <field name="convocatorias_id"/>
+         
+          
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="captacion_programas_form">
+      <field name="name">Formulario Programas</field>
+      <field name="model">captacion.programas</field>
+      <field name="arch" type="xml">
+        <form string="Programas">
+            <sheet>
+              <group>
+                  <field name="name"/>
+                  <field name="situacion"/>
+                  <field name="convocatorias_id"/>
+                  
+                  
+              </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="captacion_action_programas">
+      <field name="name">Programas</field>
+      <field name="res_model">captacion.programas</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+  </data>
+</odoo>

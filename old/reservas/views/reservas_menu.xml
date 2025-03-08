@@ -1,0 +1,8 @@
+<odoo>
+  <data>
+        <!-- General Sub menu -->
+    <menuitem name="Aulas" id="reservas_aulas" parent="inforef.menu_general_root"
+              action="reservas_action_aulas"/> 
+  
+  </data>
+</odoo>

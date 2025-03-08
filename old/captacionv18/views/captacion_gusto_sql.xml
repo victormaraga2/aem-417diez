@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Vista tipo Tree para mostrar los resultados -->
+        <record id="view_captacion_captacion_sql_tree" model="ir.ui.view">
+            <field name="name">captacion.captacion.sql.tree</field>
+            <field name="model">captacion.captacion.sql</field>
+            <field name="arch" type="xml">
+                <list string="Resultados captacion SQL">
+
+                    <field name="q_participante"/>
+                    <field name="q_baja"/>
+                    <field name="q_orientacion"/>
+                    <field name="q_persona_atendida"/>
+                    <field name="q_incentivo"/> 
+                    <field name="q_oi40h"/> 
+                    <field name="q_insertados"/>  
+                    <field name="q_prioritarios"/>
+                    <field name="q_isosinoi"/>    
+                    <field name="q_isoconoi"/>    
+                    <field name="provincia"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vista tipo Form para detalles (opcional) -->
+        <record id="view_captacion_captacion_sql_form" model="ir.ui.view">
+            <field name="name">captacion.captacion.sql.form</field>
+            <field name="model">captacion.captacion.sql</field>
+            <field name="arch" type="xml">
+                <form string="Detalle captacion SQL">
+                    <sheet>
+                        <group>
+                            <field name="q_participante"/>
+                            <field name="q_baja"/>
+                            <field name="q_orientacion"/>
+                            <field name="q_persona_atendida"/>
+                            <field name="q_incentivo"/> 
+                            <field name="q_oi40h"/> 
+                            <field name="q_insertados"/>  
+                            <field name="q_prioritarios"/>
+                            <field name="q_isosinoi"/>    
+                            <field name="q_isoconoi"/>    
+                            <field name="provincia"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción para abrir la vista -->
+        <record id="captacion.action_captacion_sql" model="ir.actions.act_window">
+            <field name="name">Resultados captacion SQL</field>
+            <field name="res_model">captacion.captacion.sql</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

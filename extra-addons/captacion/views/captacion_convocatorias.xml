@@ -1,0 +1,47 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="captacion_convocatorias_list">
+      <field name="name">Listado Convocatorias</field>
+      <field name="model">captacion.convocatorias</field>
+      <field name="arch" type="xml">
+        <tree string="Convocatorias">
+          <field name="name"/>
+          <field name="situacion"/>
+          <field name="provincias_ids"/>
+          <field name="fecha_inicio"/>
+          <field name="fecha_fin"/>
+         
+          
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="captacion_convocatorias_form">
+      <field name="name">Formulario Convocatorias</field>
+      <field name="model">captacion.convocatorias</field>
+      <field name="arch" type="xml">
+        <form string="Convocatoria">
+            <sheet>
+              <group>
+                  <field name="name"/>
+                  <field name="situacion"/>
+                  <field name="provincia_ids"/>
+                  <field name="fecha_inicio"/>
+                  <field name="fecha_fin"/>
+                  
+                  
+              </group>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="captacion_action_convocatorias">
+      <field name="name">Convocatorias</field>
+      <field name="res_model">captacion.convocatorias</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+    <!--   MENU GENERAL   -->
+    <menuitem name="Gestión Técnica" id="gusto.menu_general_root"/>
+    <menuitem name="GEST Configuracion" id="gusto.menu_configuracion_root"/>
+
+    <!-- General Sub menu -->
+    <menuitem name="Solicitudes" id="gusto_oportunidad" parent="gusto.menu_general_root"
+              action="gusto_action_oportunidad"/> 
+
+    <menuitem name="Participantes" id="gusto.general_gusto" parent="gusto.menu_general_root" action="gusto.action_gusto"/>
+   
+    <menuitem name="Acciones Formativas" id="gusto.general_accionesformativas" parent="gusto.menu_general_root" action="gusto.action_acciones_formativas"/>
+    <menuitem name="Talleres" id="gusto.general_talleres" parent="gusto.menu_general_root" action="gusto.action_talleres"/>
+    <menuitem name="Contratos" id="gusto.general_contratos" parent="gusto.menu_general_root" />
+    <menuitem name="Todos" id="gusto.general_contratos_todos" parent="gusto.general_contratos" sequence='10' action="gusto.action_contratos"/>
+    <!--
+    <menuitem name="General y Autónomo" id="gusto.general_contratos_genyaut" parent="gusto.general_contratos" sequence='20' action="gusto.action_contratos_genyaut"/>
+    <menuitem name="Contratos Agrarios" id="gusto.general_contratos_agrarios" parent="gusto.general_contratos" sequence='30' action="gusto.action_contratos_agrarios"/>
+    -->
+    <menuitem name="Partner" id="gusto.general_prospectores" parent="gusto.menu_general_root" action="gusto.action_prospectores"/>
+    <menuitem name="Formadores" id="gusto.general_formadores" parent="gusto.menu_general_root" action="gusto.action_formadores"/>
+    
+    <menuitem name="Informes" id="gusto.general_tablero_informe" parent="gusto.menu_general_root"/>
+    
+    <menuitem name="Datos GUSTO" id="gusto.informe_datos_gusto" parent="gusto.general_tablero_informe" action="gusto.action_datos"/>
+    
+    <menuitem name="Fecha cumplen contratos con 120 dias computable" id="gusto.informe_objetivos_graph1" parent="gusto.general_tablero_informe" action="gusto.action_objetivos"/>
+    
+    <!-- Configuracion Sub menu  -->
+
+    <!-- Crear el nuevo submenú "Tablas gusto" -->
+    <menuitem name="Tablas gusto" id="gusto.menu_tablas_gusto" parent="gusto.menu_configuracion_root" sequence="10"/>
+
+    <!-- Menús dentro de "Tablas gusto" -->
+    <menuitem name="Colectivo" id="gusto.conf_colectivo_menu" parent="gusto.menu_tablas_gusto" action="gusto.action_colectivo"/> 
+    <menuitem name="Docentes" id="gusto.conf_docentes_menu" parent="gusto.menu_tablas_gusto" action="gusto.action_docentes"/>
+    <menuitem name="Sector Ocupación" id="gusto.conf_sectoro_menu" parent="gusto.menu_tablas_gusto" action="gusto.action_sectorocupacion"/>
+    <menuitem name="Perfil Ocupación" id="gusto.conf_perfilo_menu" parent="gusto.menu_tablas_gusto" action="gusto.action_perfilocupacion"/>
+    <menuitem name="Jornadas" id="gusto.conf_jornada_menu" parent="gusto.menu_tablas_gusto" action="gusto.action_jornada"/>
+    <menuitem name="Tipo documento" id="gusto.conf_tipo_documento_menu" parent="gusto.menu_tablas_gusto" action="gusto.action_tipo_doc"/>
+    <menuitem name="Taller" id="gusto.conf_general_talleres" parent="gusto.menu_tablas_gusto" action="gusto.action_taller"/>
+    
+    <!-- Submenu Tablas Auxiliares -->
+    <menuitem name="Tablas Auxiliares" id="gusto_cfg_tablas_auxiliares" parent="gusto.menu_configuracion_root"/>
+    
+    <!-- Menús dentro de Tablas Auxiliares -->
+    <menuitem name="Intereses Profesionales" id="capcacion_cfg_interesesprofesionales" parent="gusto_cfg_tablas_auxiliares"
+              action="gusto_action_interesesprofesionales"/>
+    <menuitem name="Necesidades Formación Específica" id="capcacion_cfg_necesidadesformacionespecifica" parent="gusto_cfg_tablas_auxiliares"
+              action="gusto_action_necesidadesformacionespecifica"/>
+    <menuitem name="Objetivo Profesional" id="capcacion_cfg_objetivoprofesional" parent="gusto_cfg_tablas_auxiliares"
+              action="gusto_action_objetivoprofesional"/>
+    
+    <!-- Submenu Tablas Maestras -->
+    <menuitem name="Tablas Maestras" id="gusto_cfg_tablas_maestras" parent="gusto.menu_configuracion_root"/>
+    
+    <!-- Menús dentro de Tablas Maestras -->
+    <menuitem name="Proyectos" id="capcacion_cap_proyectos" parent="gusto_cfg_tablas_maestras"
+              action="gusto_action_proyectos"/>
+    <menuitem name="Programas" id="capcacion_cap_programas" parent="gusto_cfg_tablas_maestras"
+              action="gusto_action_programas"/>
+    <menuitem name="Convocatorias" id="capcacion_cap_convocatorias" parent="gusto_cfg_tablas_maestras"
+              action="gusto_action_convocatorias"/>
+    <menuitem name="Productos" id="capcacion_cap_productos" parent="gusto_cfg_tablas_maestras"
+              action="gusto_action_productos"/>
+  </data>
+</odoo>

@@ -1,0 +1,16 @@
+from . import captacion_documentos
+from . import captacion_tipo_documento
+
+
+from . import captacion_formaciones
+from . import captacion_notify_message
+#from . import captacion_talleres_import_wizard
+
+
+
+
+from . import captacion_docentes_acciones
+from . import captacion_perfiles_participantes
+from . import captacion_sectores_participantes
+from . import captacion_acciones_participantes
+

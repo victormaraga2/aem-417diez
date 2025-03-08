@@ -1,0 +1,146 @@
+<odoo>
+  <data>
+    <!-- Vista de lista -->
+    <record model="ir.ui.view" id="infocap_solicitudes_list">
+      <field name="name">Listado Solicitudes</field>
+      <field name="model">crm.lead</field>
+      <field name="type">list</field>  <!-- Odoo 18 usa 'list' en vez de 'tree' -->
+      <field name="priority" eval="10"/>
+       
+       <!-- Odoo 18 usa priority en vez de mode -->
+      <field name="arch" type="xml">
+        <list string="Solicitudes" class="custom_bold"
+          decoration-danger="stage_id == 5"
+          decoration-warning="stage_id == 1"
+          decoration-success="stage_id == 4"  
+          decoration-info="stage_id == 3" 
+          decoration-muted="stage_id == 2">
+          <field name="programa_id"/>
+          <field name="proyecto_id"/>
+          <field name="convocatoria_id"/>
+          <field name="producto_id"/>
+          <!--
+          <field name="name" invisible="1"/>
+          -->
+          <field name="nombre"/>
+          <field name="apellidos"/>
+          <!--
+          <field name="contact_name" invisible="1"/>
+          -->
+          <field name="dni"/>
+          <field name="stage_id"/>
+
+          <!-- Nueva Columna 
+            <field name="is_contact_created" string="Participante" widget="boolean_button" options="{'true': 'Sí', 'false': 'No'}"/>
+          -->
+        </list>
+      </field>
+    </record>
+
+    <!-- Vista de formulario -->
+    <record model="ir.ui.view" id="infocap_solicitudes_form">
+      <field name="name">Formulario Listado Solicitudes</field>
+      <field name="model">crm.lead</field>
+      <field name="type">form</field>
+      <field name="priority" eval="10"/>
+      <field name="arch" type="xml">
+        <form string="Solicitudes">
+          
+          <sheet>
+            <!-- Grupo principal con dos columnas -->
+            <group col="2">
+              <!-- Columna izquierda -->
+              <group>
+                <div class="col-lg-12">
+                  <span><h5>SOLICITUD:</h5></span>
+                  <hr style="border: none; border-top: 2px double black; margin: 0;"/>
+                </div>
+                
+                <field name="programa_id"
+                  options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                  readonly="stage_id == 4"
+                />
+                <field name="proyecto_id"
+                  visibility_condition="programa_id != False"
+                  options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                  readonly="stage_id == 4"
+                />
+                <field name="convocatoria_id"
+                  visibility_condition="proyecto_id != False"
+                  options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                  readonly="stage_id == 4"
+                />
+                <field name="producto_id"
+                  visibility_condition="convocatoria_id != False"
+                  options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                  readonly="stage_id == 4"
+                />
+                <field name="name" invisible="1">{'default_name': 'solicitud'}</field>
+                <field name="contact_name"
+                  readonly="stage_id == 4"
+                />
+                <field name="stage_id" options="{'no_create': True, 'no_edit': True, 'no_open': True}"                 
+                  decoration-danger="stage_id == 5"
+                  decoration-warning="stage_id == 1"
+                  decoration-success="stage_id == 2"  
+                  decoration-info="stage_id == 3" 
+                  decoration-muted="stage_id == 4"
+                  readonly="partner_id.es_participante == True"/>
+                  
+                <div>
+                  <button name="action_pasar_a_contacto" 
+                    type="object" 
+                    string="Pasar Participante" 
+                    class="btn-primary"
+                    invisible="stage_id != 4 or partner_id.es_participante == True"/>
+                </div>
+              </group>
+
+              <!-- Columna derecha -->
+              <group>
+                <div class="col-lg-12">
+                  <span><h5>DATOS PERSONALES:</h5></span>
+                  <hr style="border: none; border-top: 2px double black; margin: 0;"/>
+                </div>
+                <field name="state_id" readonly="stage_id == 4"/>
+                <field name="country_id" readonly="stage_id == 4"/>
+                <field name="municipio" string="MUNICIPIO" readonly="stage_id == 4"/>
+                <field name="phone" string="TELEFONO" readonly="stage_id == 4"/>
+                <field name="email_from" string="CORREO" readonly="stage_id == 4"/>
+                <field name="dni" string="DNI" readonly="stage_id == 4"/>
+
+                <field name="colectivo_id" string="COLECTIVO" readonly="stage_id == 4"/> <!--   readonly="1"/> -->
+
+                <field name="anos_exp" string="AÑOS EXPERIENCIA" readonly="stage_id == 4"/>
+                <field name="description" string="OBSERVACIONES" readonly="stage_id == 4"/>
+              </group>
+            </group>
+            <div class="col-lg-12">
+                  <button name="get_upload_url" 
+                    type="object" 
+                    string="Generar Link" 
+                    class="btn-primary"
+                    invisible="stage_id != 3"/>
+                    <group>
+                      <field name="url" widget="CopyClipboardChar" invisible="stage_id != 3"/>
+                    </group>
+            </div>
+            <notebook>
+              <page string="Documentos aportados" name="doc_aportados" readonly="stage_id == 4">
+                  <field name='documentos_ids' readonly="stage_id == 4"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción para abrir la vista -->
+    <record model="ir.actions.act_window" id="infocap_action_solicitudes">
+      <field name="name">Listado Solicitudes</field>
+      <field name="res_model">crm.lead</field>
+      <field name="view_mode">list,form</field>  <!-- Se usa 'list' en lugar de 'tree' -->
+      <field name="view_id" ref="infocap_solicitudes_list"/>
+    </record>
+  </data>
+</odoo>

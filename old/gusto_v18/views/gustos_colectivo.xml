@@ -1,0 +1,35 @@
+<odoo>
+  <data>
+    <!-- Vista de lista para gusto.colectivo -->
+    <record model="ir.ui.view" id="gusto.colectivo_list">  
+      <field name="name">Colectivo</field>
+      <field name="model">gusto.colectivo</field>
+      <field name="arch" type="xml">
+        <list>  <!-- Se cambió <tree> por <list> (Odoo 18 usa <list> en lugar de <tree>) -->
+          <field name="name"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Vista de formulario para gusto.colectivo -->
+    <record model="ir.ui.view" id="gusto.colectivo_form">  <!-- Se agregó priority="0" -->
+      <field name="name">Colectivo</field>
+      <field name="model">gusto.colectivo</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <field name="name"/>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción para abrir la vista de colectivo -->
+    <record model="ir.actions.act_window" id="gusto.action_colectivo">
+      <field name="name">Colectivo</field>
+      <field name="res_model">gusto.colectivo</field>
+      <field name="view_mode">list,form</field>  <!-- Se cambió tree,form por list,form -->
+    </record>
+
+  </data>
+</odoo>

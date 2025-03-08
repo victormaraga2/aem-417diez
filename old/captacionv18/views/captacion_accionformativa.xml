@@ -1,0 +1,42 @@
+<odoo>
+  <data>
+    <!-- Definición de la vista de lista -->
+
+    <record model="ir.ui.view" id="captacion.accionformativa_list">  
+      <field name="name">Acción formativa</field>
+      <field name="model">captacion.accionformativa</field>
+      <field name="arch" type="xml">
+        <list string="Acción Formativa">  <!-- Se cambió <tree> por <list> (Odoo 18 usa <list> en lugar de <tree>) -->
+          <field name="name"/>
+          <field name="duraccion"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Definición de la vista de formulario -->
+
+    <record model="ir.ui.view" id="captacion.accionformativa_form">
+      <field name="name">Acción formativa</field>
+      <field name="model">captacion.accionformativa</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name" string="Acción Formativa"/>  
+              <field name="duraccion" string="Duración en horas"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Acción para abrir vistas en modelos -->
+
+    <record model="ir.actions.act_window" id="captacion.action_accionformativa">
+      <field name="name">Acciones formativas</field>
+      <field name="res_model">captacion.accionformativa</field>
+      <field name="view_mode">list,form</field>  <!-- Se cambió tree,form por list,form -->
+    </record>
+
+  </data>
+</odoo>

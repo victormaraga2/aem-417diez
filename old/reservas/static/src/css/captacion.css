@@ -1,0 +1,32 @@
+/* Fondo rojo para decoration-danger */
+.o_list_view .o_data_row.decoration-danger {
+    background-color: #ffcccc !important; /* Rojo claro */
+}
+
+/* Fondo amarillo para decoration-warning */
+.o_list_view .o_data_row.decoration-warning {
+    background-color: #ffffcc !important; /* Amarillo claro */
+}
+
+/* Fondo verde para decoration-success */
+.o_list_view .o_data_row.decoration-success {
+    background-color: #ccffcc !important; /* Verde claro */
+}
+
+/* Fondo azul para decoration-info */
+.o_list_view .o_data_row.decoration-info {
+    background-color: #cceeff !important; /* Azul claro */
+}
+
+/* Fondo gris para decoration-muted */
+.o_list_view .o_data_row.decoration-muted {
+    background-color: #f0f0f0 !important; /* Gris claro */
+}
+
+/* Negrita */
+.custom_bold {
+    font-weight: bold;
+    color: #000000; /* Color negro */
+    font-size: 14px; /* Tamaño de fuente */
+}
+

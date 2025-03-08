@@ -1,0 +1,40 @@
+<odoo>
+  <data>
+   
+    <!-- Top menu item -->
+    <menuitem name="Gestión Técnica" id="captacion_menu_root"/>
+    
+    <!-- Submenu Captacion -->
+    <menuitem name="Solicitudes" id="captacion_oportunidad" parent="captacion_menu_root"
+              action="captacion_action_oportunidad"/> 
+
+    
+    <!-- Menu Configuracion -->
+    <menuitem name="GEST Configuracion" id="captacion_cfg_menu_root"/>
+    
+    <!-- Submenu Tablas Auxiliares -->
+    <menuitem name="Tablas Auxiliares" id="captacion_cfg_tablas_auxiliares" parent="captacion_cfg_menu_root"/>
+    
+    <!-- Menús dentro de Tablas Auxiliares -->
+    <menuitem name="Intereses Profesionales" id="capcacion_cfg_interesesprofesionales" parent="captacion_cfg_tablas_auxiliares"
+              action="captacion_action_interesesprofesionales"/>
+    <menuitem name="Necesidades Formación Específica" id="capcacion_cfg_necesidadesformacionespecifica" parent="captacion_cfg_tablas_auxiliares"
+              action="captacion_action_necesidadesformacionespecifica"/>
+    <menuitem name="Objetivo Profesional" id="capcacion_cfg_objetivoprofesional" parent="captacion_cfg_tablas_auxiliares"
+              action="captacion_action_objetivoprofesional"/>
+    
+    <!-- Submenu Tablas Maestras -->
+    <menuitem name="Tablas Maestras" id="captacion_cfg_tablas_maestras" parent="captacion_cfg_menu_root"/>
+    
+    <!-- Menús dentro de Tablas Maestras -->
+    <menuitem name="Proyectos" id="capcacion_cap_proyectos" parent="captacion_cfg_tablas_maestras"
+              action="captacion_action_proyectos"/>
+    <menuitem name="Programas" id="capcacion_cap_programas" parent="captacion_cfg_tablas_maestras"
+              action="captacion_action_programas"/>
+    <menuitem name="Convocatorias" id="capcacion_cap_convocatorias" parent="captacion_cfg_tablas_maestras"
+              action="captacion_action_convocatorias"/>
+    <menuitem name="Productos" id="capcacion_cap_productos" parent="captacion_cfg_tablas_maestras"
+              action="captacion_action_productos"/>
+
+  </data>
+</odoo>

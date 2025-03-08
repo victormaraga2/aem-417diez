@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+
+<record id="view_captacion_tipo_tag_tree" model="ir.ui.view">
+    <field name="name">captacion.tipo.tag.tree</field>
+    <field name="model">captacion.tipo.tag</field>
+    <field name="arch" type="xml">
+        <list>
+            <field name="name"/>
+            <field name="categoria_id"/>
+        </list>
+    </field>
+</record>
+
+   <record model="ir.actions.act_window" id="captacion.action_tipo_tag">
+      <field name="name">Categoria Tag</field>
+      <field name="res_model">captacion.tipo.tag</field>
+      <field name="view_mode">list,form</field>
+    </record>
+  </data>
+</odoo>

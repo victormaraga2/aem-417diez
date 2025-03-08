@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--  Andalucía Emplea Mas Categoría de Modulo -->
+        <record id="module_category_infocap" model="ir.module.category">
+            <field name="name">Categoría de solicitudes</field>
+            <field name="description">Ayuda a la gestión de la asociación</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <!-- Tecnicos Solicitudes-->
+        <record id="group_infocap_tecnico_solicitudes" model="res.groups">
+            <field name="name">Tecnicos solicitudes</field>
+            <field name="category_id" ref="infocap.module_category_infocap" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+        <!-- Tecnicos Reskilling-->
+        <record id="group_infocap_tecnico_reskilling" model="res.groups">
+            <field name="name">Tecnicos Reskilling</field>
+            <field name="category_id" ref="infocap.module_category_infocap" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <!-- Tecnicos Integrales-->
+        <record id="group_infocap_tecnico_integrales" model="res.groups">
+            <field name="name">Tecnicos Integrales</field>
+            <field name="category_id" ref="infocap.module_category_infocap" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <!-- Tecnicos Prospección-->
+        <record id="group_infocap_tecnicos_prospeccion" model="res.groups">
+            <field name="name">Tecnicos Prospeccion</field>
+            <field name="category_id" ref="infocap.module_category_infocap" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <!-- Tecnicos Direccion-->
+        <record id="group_infocap_tecnicos_direccion" model="res.groups">
+            <field name="name">Tecnicos Direccion</field>
+            <field name="category_id" ref="infocap.module_category_infocap" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        </record>
+
+        <!-- Grupo Integrales-->               
+        <record id="grupo_infocap_integrales" model="res.groups">
+            <field name="name">Integrales</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <!-- Grupo Reskilling-->               
+        <record id="grupo_infocap_reskilling" model="res.groups">
+            <field name="name">Reskilling</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <!-- Grupo Configuracion-->               
+        <record id="grupo_infocap_configuracion" model="res.groups">
+            <field name="name">Configuración GUSTO</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+
+
+
+    </data>
+</odoo>

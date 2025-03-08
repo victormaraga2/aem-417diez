@@ -1,0 +1,10 @@
+<odoo>
+<data>
+    <template id="finaliza_accion_assets_backend" inherit_id="web.assets_backend" name="Finaliza Accion Widget Assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/captacion/static/src/js/finaliza_accion_widget.js"/>
+            <link rel="stylesheet" type="text/css" href="/captacion/static/src/css/finaliza_accion_widget.css"/>
+        </xpath>
+    </template>
+</data>
+</odoo>

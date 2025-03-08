@@ -1,0 +1,334 @@
+from odoo import models, fields, api, _
+import re
+from datetime import timedelta
+from odoo.exceptions import ValidationError
+import logging
+_logger = logging.getLogger(__name__)
+
+
+
+
+class GustoTalleress(models.Model):
+    _name = 'gusto.talleres'
+    _description = 'Registro de talleres'
+
+    id = fields.Integer(string='ID')
+    #######################################################################################################
+    #
+    #    CARGA DEL STO
+    #
+    #######################################################################################################
+    id_sto = fields.Integer('ID_STO')
+    country_id = fields.Many2one('res.country', string='País', default=lambda self: self.env.ref('base.es'))
+    provincia_id = fields.Many2one('res.country.state',  
+                                   domain="[('country_id', '=', country_id), ('name', 'in', ['Cádiz', 'Córdoba', 'Granada', 'Huelva', 'Jaén', 'Málaga', 'Sevilla', 'Almería'])]",
+                                   string='PROVINCIA')
+    
+    ### Campos añadidos por Victor ### 14/01/2025
+    ####################################################
+    pt_nombre=fields.Char('PT. NOMBRE')                    #   STO -> PT. NOMBRE
+    pt_apellido1=fields.Char('PT. APELLIDO1')              #   STO -> PT. APELLIDO1
+    pt_apellido2=fields.Char('PT. APELLIDO2')              #   STO -> PT. APELLIDO1
+
+    # provincia_id = fields.Many2one('res.country.state', string="Provincia", domain="[('country_id', '=', country_id)]")
+    provincia_ids = fields.Many2many('res.country.state', string="Provincia", domain="[('country_id', '=', country_id)]")
+    company_id = fields.Many2one('res.company', string='Company', required=False,)#default=lambda self.env.company,)
+    company_ids = fields.Many2many('res.company',string='Empresas Compartidas',required=False,)#default=lambda self: self.env.company    
+    #####################################################
+
+    name = fields.Char('DENOMINACION')    
+    #tipo_ori = fields.Char('TIPO ORIENTACION')
+    fec_inicio = fields.Date('F. INICIO')
+    fec_fin = fields.Date('F. FIN')
+    horas = fields.Float('HORAS')
+    turno = fields.Char('TURNO MÑN-TARDE')
+    aula = fields.Char('AULA')
+    pt_nombre = fields.Char('NOMBRE')
+    pt_apellido1 = fields.Char('APELLIDO1')
+    pt_apellido2 = fields.Char('APELLIDO2')
+    unidad = fields.Char('UNIDAD')
+    tipo = fields.Many2one('gusto.tipo.formacion','TIPO STO')
+    tipo_gusto = fields.Many2one('gusto.tipo.doc','TIPO GUSTO')
+    
+
+    estado = fields.Char('ESTADO')
+
+
+
+    ######################################################################################################
+    #
+    #               NECESARIOS PARA GUSTO
+    #
+    ######################################################################################################
+
+
+    # modalidad = fields.Selection([('individual', 'Individual'), ('grupal', 'Grupal')])
+    modalidad = fields.Selection([('individual', 'Individual'), ('grupal', 'Grupal')], default='grupal', required=True, string='MODALIDAD')
+    observaciones = fields.Char('Observaciones')
+    docaem_ids = fields.One2many('gusto.docaem', 'taller_id', string='DOCUMENTACION')
+    
+    participantes_talleres_ids = fields.Many2many('gusto.gusto', relation='gusto_talleres1_rel', string='PARTICIPANTES')
+    participantes_talleres2_ids = fields.One2many('gusto.gusto', 'talleres_id')
+    gusto_id = fields.Many2one('gusto.gusto', string='PARTICIPANTES') # Necesario para gusto
+    gusto_name = fields.Char( related='gusto_id.participante') 
+    gusto_id_id = fields.Integer (related='gusto_id.id')
+    
+ 
+
+    @api.onchange('participantes_talleres_ids')
+    def onchange_participantes(self):
+        """Lógica para manejar el cambio de participantes_talleres_ids."""
+        if self.modalidad != 'individual' and self.participantes_talleres_ids:
+            # self.create_docaem_grupal_records()            
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'gusto.confirm.docaem.wizard',
+                'view_mode': 'form',
+                'target': 'new',
+                'context': {
+                    'default_talleres_id': self.id,
+                }
+            }
+        
+    def action_view_documents(self):
+        return {
+            'name': 'Documentos Relacionados',
+            'type': 'ir.actions.act_window',
+            'res_model': 'gusto.docaem',
+            'view_mode': 'form',
+            'domain': [('taller_id', '=', self.id), ('gusto_id', '=', self.gusto_id.name)],
+            'context': {'default_taller_id': self.id, 'default_gusto_id': self.gusto_id.name},
+            'res_id': self.id,  # Abre el archivo del registro actual
+            'views': [(self.env.ref('gusto.view_file_viewer_form').id, 'form')],
+            'target': 'new',  # Abrir en un popup
+        }
+    
+    def action_open_file_viewer(self):
+        # Devuelve la vista del archivo en un formulario popup
+        return {
+            'name': 'Visor de Archivo',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'gusto.docaem',
+            'domain': [('taller_id', '=', self.id), ('gusto_id', '=', self.gusto_id.id)],
+            'context': {'default_taller_id': self.id, 'default_gusto_id': self.gusto_id.id},
+            'res_id': self.id,  # Abre el archivo del registro actual
+            'views': [(self.env.ref('gusto.view_file_viewer_form').id, 'form')],
+            'target': 'new',  # Abrir en un popup
+        }
+    
+    
+    #@api.model
+    #def default_get(self, fields):
+    #    """Ajustar el dominio dinámicamente según el contexto."""
+    #    res = super(GustoTalleress, self).default_get(fields)
+    #    if self.env.context.get('default_modalidad') == 'individual':
+    #        # Caso creación desde gusto.gusto: Permitir solo 'INDIVIDUAL'
+    #        res['tipo_gusto_domain'] = [('name', 'ilike', 'INDIVIDUAL')]
+    #    else:
+    #        # Caso creación directa desde gusto.talleres: Excluir 'INDIVIDUAL'
+    #        res['tipo_gusto_domain'] = [('name', 'not ilike', 'INDIVIDUAL')]
+    #    return res
+
+    @api.onchange('tipo_gusto')
+    def _onchange_tipo_gusto(self):
+        """Validar que el valor de tipo_gusto cumpla con el dominio."""
+        if self.tipo_gusto:
+            domain = self.env.context.get('tipo_gusto_domain')
+            if domain and not self.tipo_gusto.name in [d[2] for d in domain if 'name' in d]:
+                self.tipo_gusto = False
+                return {
+                    'warning': {
+                        'title': 'Selección inválida',
+                        'message': 'El valor seleccionado no está permitido para este contexto.',
+                    }
+                }
+    """
+    @api.model
+    def create(self, vals):
+        
+        modalidad = self.env.context.get('default_modalidad')
+
+        if not modalidad:
+            modalidad = vals.get('modalidad')
+        
+        gusto_id = self.env.context.get('default_gusto_id')
+
+        # Validar modalidad
+        #if not modalidad:
+        #    raise ValidationError(f"La modalidad no está definida en el contexto.{vals}")
+
+        #if not isinstance(vals, dict):
+        #    raise ValidationError(f"Los valores proporcionados no son válidos.'{vals}'")
+        
+        
+        if modalidad == 'individual':
+
+            if isinstance(vals, dict):
+
+                _logger.info(f"Creando taller con modalidad '{modalidad}' y gusto_id '{gusto_id}'. Valores: {vals}")
+            
+                # Crear taller según la modalidad
+                taller = super(GustoTalleress, self).create(vals)
+
+
+                if not gusto_id:
+                    raise ValidationError("El 'gusto_id' es obligatorio para la modalidad individual.")
+                
+                _logger.info(f"Relacionando gusto_id con el taller '{modalidad}' y gusto_id '{gusto_id}'. Valores: {vals}")
+                # Relacionar el gusto_id con el taller
+                taller.write({'participantes_talleres_ids': [(4, int(gusto_id))]})
+                
+                # Crear registros individuales en gusto.docaem
+                taller.create_docaem_individual_records()
+            
+            else:
+                raise ValidationError(f"Los valores proporcionados no son válidos.'{vals}'")
+
+            return taller   
+        
+        elif modalidad == 'grupal':
+
+            _logger.info(f"Creando taller con modalidad '{modalidad}' y gusto_id '{gusto_id}'. Valores: {vals}")
+            
+            # Crear taller según la modalidad
+            taller = super(GustoTalleress, self).create(vals)
+            
+            command = vals['participantes_talleres_ids'][0]
+            participantes_ids = command[2]
+
+            _logger.info(f"IDs de participantes: {participantes_ids}")
+            for participante in participantes_ids:
+                taller.write({'participantes_talleres_ids': [(4, participante)]})
+
+            taller.create_docaem_grupal_records()
+            return taller
+     """   
+    @api.model
+    def create(self, vals):
+        modalidad = self.env.context.get('default_modalidad', vals.get('modalidad'))
+        gusto_id = self.env.context.get('default_gusto_id')
+        
+        if modalidad == 'individual':
+            if not gusto_id:
+                raise ValidationError("El 'gusto_id' es obligatorio para la modalidad individual.")
+            _logger.info(f"Creando taller con modalidad '{modalidad}' y gusto_id '{gusto_id}'. Valores: {vals}")
+            taller = super(GustoTalleress, self).create(vals)
+            _logger.info(f"Relacionando gusto_id con el taller '{modalidad}' y gusto_id '{gusto_id}'. Valores: {vals}")
+            taller.write({'participantes_talleres_ids': [(4, int(gusto_id))]})
+            taller.create_docaem_individual_records()
+            return taller
+        elif modalidad == 'grupal':
+            _logger.info(f"Creando taller con modalidad '{modalidad}' y gusto_id '{gusto_id}'. Valores: {vals}")
+            taller = super(GustoTalleress, self).create(vals)
+            command = vals.get('participantes_talleres_ids', [])
+            if command and command[0][0] == 6:  # Comando de reemplazo de lista
+                participantes_ids = command[0][2]
+                for participante_id in participantes_ids:
+                    _logger.info(f"IDs de participantes: {participante_id}")
+                    taller.write({'participantes_talleres_ids': [(4, participante_id)]})
+            taller.create_docaem_grupal_records()
+            return taller
+
+    def write(self, vals):
+        modalidad = self.env.context.get('default_modalidad', vals.get('modalidad'))
+        # Si se están modificando los participantes
+        if 'participantes_talleres_ids' in vals:
+            
+            if modalidad == "grupal":
+                for record in self:
+                    # Obtener los participantes actuales antes de la actualización
+                    current_participantes = record.participantes_talleres_ids
+                    # Obtener los nuevos participantes después de la actualización
+                    new_participantes = self.env['gusto.gusto'].browse(vals['participantes_talleres_ids'][0][2])
+                    # Encontrar los participantes eliminados
+                    removed_participantes = current_participantes - new_participantes
+                    # Encontrar los participantes añadidos
+                    added_participantes = new_participantes - current_participantes
+
+                    # Eliminar los documentos de los participantes eliminados
+                    for participante in removed_participantes:
+                        self.env['gusto.docaem'].search([
+                            ('taller_id', '=', record.id),
+                            ('gusto_id', '=', participante.id)
+                        ]).unlink()
+
+                    # Crear documentos para los nuevos participantes añadidos
+                    if added_participantes:
+                        record.create_docaem_grupal_records_for_participants(added_participantes)
+
+        return super(GustoTalleress, self).write(vals)
+
+   
+    def create_docaem_individual_records(self):
+        """Crear registros en gusto.docaem según la duración del taller."""
+        for record in self:
+            if record.fec_inicio and record.fec_fin and record.gusto_id:
+                rango_dias = (record.fec_fin - record.fec_inicio).days + 1
+                fechas = [record.fec_inicio + timedelta(days=i) for i in range(rango_dias)]
+
+                # Filtrar solo los días laborables (lunes a viernes)
+                dias_laborables = [fecha for fecha in fechas if fecha.weekday() not in (5, 6)]  # Excluir sábados y domingos
+
+                # Calcular las horas por día según los días laborables
+                rango_dias_laborables = len(dias_laborables)
+                horas_por_dia = record.horas / rango_dias_laborables if rango_dias_laborables > 0 else 0
+
+                for fecha in fechas:
+                    # Excluir sábados (5) y domingos (6)
+                    if fecha.weekday() in (5, 6):  # 5: Sábado, 6: Domingo
+                        _logger.info(f"Excluyendo fecha '{fecha}' porque es fin de semana.")
+                        continue
+                    self.env['gusto.docaem'].create({
+                        'taller_id': record.id,
+                        'fecha': fecha,
+                        'horas': horas_por_dia,
+                        'gusto_id': record.gusto_id.id,
+                        'tipo_doc_id': record.tipo_gusto.id,
+                        'name': f"{record.gusto_id.name} - {fecha}"
+                    })
+                    _logger.info(f"Creando documento para taller '{record.id}' y fecha '{fecha}' y gusto_id '{record.gusto_id.id}'.")
+
+    
+    
+    def create_docaem_grupal_records(self):
+        """Crear registros en gusto.docaem para talleres grupales."""
+        self.create_docaem_grupal_records_for_participants(self.participantes_talleres_ids)
+
+
+
+
+    def create_docaem_grupal_records_for_participants(self, participantes):
+        """Crear registros en gusto.docaem para los participantes específicos."""
+        for record in self:
+            if record.fec_inicio and record.fec_fin:
+                # Calcular el rango de fechas
+                rango_dias = (record.fec_fin - record.fec_inicio).days + 1
+                fechas = [record.fec_inicio + timedelta(days=i) for i in range(rango_dias)]
+                # Filtrar solo los días laborables (excluir sábados y domingos)
+                dias_laborables = [fecha for fecha in fechas if fecha.weekday() not in (5, 6)]
+                # Calcular las horas por día
+                horas_por_dia = record.horas / len(dias_laborables) if dias_laborables else 0
+
+                for participante in participantes:
+                    for fecha in dias_laborables:
+                        # Verificar si ya existe un documento para este participante, taller y fecha
+                        existing_record = self.env['gusto.docaem'].search([
+                            ('taller_id', '=', record.id),
+                            ('gusto_id', '=', participante.id),
+                            ('fecha', '=', fecha),
+                        ], limit=1)
+                        if not existing_record:
+                            # Crear un nuevo documento
+                            self.env['gusto.docaem'].create({
+                                'taller_id': record.id,
+                                'fecha': fecha,
+                                'horas': horas_por_dia,
+                                'gusto_id': participante.id,
+                                'tipo_doc_id': record.tipo_gusto.id,
+                                'name': f"Taller: {record.name} - {participante.participante} - {fecha}",
+                                'grupal': True,
+                            })
+                            _logger.info(f"Documento creado para taller_id: '{record.id}', gusto_id: '{participante.id}', fecha: '{fecha}'")
+                        else:
+                            _logger.info(f"Documento ya existe para taller_id: '{record.id}', gusto_id: '{participante.id}', fecha: '{fecha}'")

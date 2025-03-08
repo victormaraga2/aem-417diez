@@ -1,0 +1,75 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="captacion_convocatorias_list">
+      <field name="name">Listado Convocatorias</field>
+      <field name="model">captacion.convocatoria</field>
+      <field name="type">list</field>  <!-- Odoo 18 usa 'list' en vez de 'tree' -->
+      <field name="priority" eval="10"/>  <!-- Odoo 18 usa priority en vez de mode -->
+      <field name="arch" type="xml">
+        <list string="Convocatorias">  <!-- Se cambia <tree> por <list> -->
+          
+          <field name="proyecto_id"/>
+          <field name="programa_id"/>
+          
+          <field name="name"/>
+          <field name="situacion"/>
+          <field name="provincias_ids" widget="many2many_tags"/>  <!-- Si es Many2many, se debe agregar el widget -->
+          
+          <field name="fecha_inicio"/>
+          <field name="fecha_fin"/>
+         
+          
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="captacion_convocatorias_form">
+      <field name="name">Formulario Convocatorias</field>
+      <field name="model">captacion.convocatoria</field>
+      <field name="type">form</field>  <!-- Se usa 'form' para los formularios -->
+      <field name="priority" eval="10"/>  <!-- Odoo 18 usa priority en vez de mode -->
+      <field name="arch" type="xml">
+        <form string="Convocatoria">
+            <sheet>
+              <group>
+                 
+                  <field name="proyecto_id"/>
+                  <field name="programa_id"/>
+                  <field name="name"/>
+                  <field name="situacion"/>
+                  <field name="provincias_ids" widget="many2many_tags"/>  <!-- Se mantiene el widget en el formulario -->
+                  <group>
+                    <field name="fecha_inicio"/>
+                  </group>
+                  <group>
+                    <field name="fecha_fin"/>
+                  </group>
+              </group>
+              <notebook>
+                <page string="Solicitudes">
+                  <!--
+                  <field name="solicitudes_ids"/>
+                  -->
+                  productos_ids
+                </page>
+                <page string="Participantes">
+                   
+                </page>
+                <page string="Actividades">
+                   <field name="productos_ids" create='false'/>
+                </page>
+            </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="captacion_action_convocatorias">
+      <field name="name">Convocatorias</field>
+      <field name="res_model">captacion.convocatoria</field>
+      <field name="view_mode">list,form</field>  <!-- Se cambia 'tree' por 'list' -->
+    </record>
+
+  </data>
+</odoo>

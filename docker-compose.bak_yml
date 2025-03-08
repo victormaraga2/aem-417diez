@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  odoo:
+    #build: .
+    image: odoo:17.0
+    env_file: .env
+    depends_on:
+      - postgres
+    ports:
+      - "127.0.0.1:9669:8069"
+    volumes:
+      - data:/var/lib/odoo
+      - ./config_odoo/odoo.conf:/etc/odoo/odoo.conf
+      - ./custom_addons:/mnt/extra-addons
+      - ./log:/var/log/odoo
+      - ./filestore:/var/lib/odoo/filestore
+    environment:
+      - ADDONS_PATH=/mnt/extra-addons
+    restart: always
+  postgres:
+    image: postgres:14
+    env_file: .env
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
+      #- ./pgdata:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5932:5432"
+volumes:
+  data:
+  db:
+

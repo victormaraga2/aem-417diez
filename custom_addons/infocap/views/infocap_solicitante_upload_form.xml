@@ -1,0 +1,69 @@
+<odoo>
+    <data>
+        <template id="infocap_solicitante_upload_form" name="Solicitante Upload Form">
+            <t t-call="website.layout">
+                <div class="container">
+                    <h1>Convocatoria <t t-esc="lead.convocatoria_id.name"/></h1>
+                    <h3>Documentación necesaria requerida  para la participación en <t t-esc="lead.producto_id.name"/></h3>
+                    <p>Por favor <t t-esc="lead.contact_name"/>, suba los siguientes documentos para poder continuar con el proceso de selección:</p>
+                    <p>Recuerde que los archivos deben estar en formato PDF o imagen (JPG, PNG, etc.)
+                    El tamaño máximo de los archivos es de 5MB.<br/>
+                    Si tiene alguna duda, por favor, póngase en contacto con nosotros a través de </p>
+                   
+                    <form t-attf-action="/solicitante/upload/submit?token=#{lead.upload_token}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="form-group d-flex align-items-center">
+                            <img t-att-src="'/infocap/static/src/img/dni1.jpg'" alt="DNI Frontal" id="dni1-preview" style="height: 40px; width: auto; margin-right: 10px;"/>
+                            <div>
+                                <label for="dni1">DNI frontal:</label>
+                                <input type="file" name="dni1" class="form-control"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="form-group d-flex align-items-center">
+                            <img t-att-src="'/infocap/static/src/img/dni2.jpg'" alt="DNI Reverso" id="dni2-preview" style="height: 40px; width: auto; margin-right: 10px;"/>
+                            <div>
+                                <label for="dni2">DNI reverso:</label>
+                                <input type="file" name="dni2" class="form-control"/>
+                            </div>    
+                        </div>
+                        <br/>
+                        <div class="form-group d-flex align-items-center">
+                            <img t-att-src="'/infocap/static/src/img/vida-laboral.jpg'" alt="Vida Laboral" id="vida-laboral-preview" style="height: 40px; width: auto; margin-right: 10px;"/>
+                            <div>
+                                <label for="vida_laboral">Vida Laboral:</label>
+                                <input type="file" name="vida_laboral" class="form-control"/>
+                            </div>    
+                        </div>
+                        <br/>
+                        <div class="form-group d-flex align-items-center">
+                            <img t-att-src="'/infocap/static/src/img/demanda.jpg'" alt="demanda" id="demanda-preview" style="height: 40px; width: auto; margin-right: 10px;"/>
+                            <div>
+                                <label for="demanda">Demanda Empleo:</label>
+                                <input type="file" name="demanda" class="form-control"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <input type="checkbox" id="checkBox" />
+                            <label for="checkBox">Acepto los <a href= "/aviso-legal">términos y condiciones</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2" id="submitButton" >Subir</button>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                const checkBox = document.getElementById("checkBox");
+                                const submitButton = document.getElementById("submitButton");
+
+                                checkBox.addEventListener("change", function() {
+                                    submitButton.disabled = !this.checked;
+                                });
+                            });
+                        </script>
+                    </form>
+                    <br/><br/>
+                    
+                </div> 
+            </t>
+        </template>
+    </data>
+</odoo>

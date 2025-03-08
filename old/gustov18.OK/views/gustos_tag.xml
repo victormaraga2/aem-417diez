@@ -1,0 +1,24 @@
+<odoo>
+    <!-- Vista de lista para gusto.tag -->
+    <record id="view_gusto_tag_tree" model="ir.ui.view">
+        <field name="name">gusto.tag.tree</field>
+        <field name="model">gusto.tag</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="tipo_tag_id"/>
+                <field name="name"/>
+                <field name="tipot_nivel_sino" options="{'invisible': True}"/>  <!-- invisible="1" reemplazado por options -->
+                <field name="tipot_experiencia" options="{'invisible': True}"/>  <!-- invisible="1" reemplazado por options -->
+                <field name="nivel" options="{'invisible': [('tipot_nivel_sino', '=', False)]}"/>  <!-- attrs reemplazado por options -->
+                <field name="experiencia" options="{'invisible': [('tipot_experiencia', '=', False)]}"/>  <!-- attrs reemplazado por options -->
+            </list>
+        </field>
+    </record>
+
+    <!-- Acción para abrir la vista de gusto.tag -->
+    <record model="ir.actions.act_window" id="gusto.action_tag">
+        <field name="name">Tag</field>
+        <field name="res_model">gusto.tag</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
